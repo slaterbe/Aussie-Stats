@@ -14,7 +14,7 @@ namespace Infrastructure
             
             new S3AssetBucketStack(app, "AssetStack", new StackProps
             {
-                StackName = "InfrastructureStack",
+                StackName = "AssetStack",
                 Env = new Amazon.CDK.Environment()
                 {
                     Account = accountId,
@@ -25,6 +25,16 @@ namespace Infrastructure
             new AuroraDatabaseStack(app, "DatabaseStack", new StackProps
             {
                 StackName = "DatabaseStack",
+                Env = new Amazon.CDK.Environment()
+                {
+                    Account = accountId,
+                    Region = region
+                }
+            });
+
+            new DemoStack(app, "DemoStack", new DemoStackProps
+            {
+                BucketName = "mudbath-demo-stack",
                 Env = new Amazon.CDK.Environment()
                 {
                     Account = accountId,
