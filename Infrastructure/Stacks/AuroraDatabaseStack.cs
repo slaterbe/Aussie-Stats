@@ -2,9 +2,15 @@
 using Amazon.CDK.AWS.RDS;
 using Amazon.CDK.AWS.EC2;
 using static Amazon.CDK.AWS.RDS.CfnDBCluster;
+using System;
 
 namespace Infrastructure.Stacks
 {
+    public class AuroraDatabaseStackProps : StackProps
+    {
+        public string AuroraSeucrityGroupId { get; set; } = String.Empty;
+    }
+
     public class AuroraDatabaseStack : Stack
     {
         internal AuroraDatabaseStack(Construct scope, string id, IStackProps props) : base(scope, id, props)

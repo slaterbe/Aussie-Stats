@@ -9,6 +9,7 @@ namespace Infrastructure
         {
             var accountId = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_ACCOUNT");
             var region = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_REGION");
+            var auroraSecurityGroup = "aurora-security-group";
 
             var app = new App();
             
@@ -22,9 +23,21 @@ namespace Infrastructure
                 }
             });
 
-            new AuroraDatabaseStack(app, "DatabaseStack", new StackProps
+            new AuroraDatabaseStack(app, "DatabaseStack", new AuroraDatabaseStackProps
             {
                 StackName = "DatabaseStack",
+                AuroraSeucrityGroupId = auroraSecurityGroup,
+                Env = new Amazon.CDK.Environment()
+                {
+                    Account = accountId,
+                    Region = region
+                }
+            });
+
+            new CensusEtlStack(app, "CensusEtlStack", new CensusEtlStackProps
+            {
+                StackName = "CensusEtlStack",
+                AuroraSeucrityGroupId = auroraSecurityGroup,
                 Env = new Amazon.CDK.Environment()
                 {
                     Account = accountId,
