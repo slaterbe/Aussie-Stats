@@ -34,7 +34,7 @@ namespace Infrastructure.Stacks
                 Code = Code.FromBucket(bucket, "default.zip"),
                 SecurityGroups = new ISecurityGroup[] { securityGroup }
             });
-
+                
             var workerFunction = new Function(this, "worker-function", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,

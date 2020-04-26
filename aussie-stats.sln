@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{6F28D03A-674F-4A7E-8776-389C450C190A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EtlEnqueue", "EtlEnqueue\EtlEnqueue.csproj", "{C556CB96-18C0-419F-BA42-12615AFD2576}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EtlEnqueue.Tests", "EtlEnqueue.Tests\EtlEnqueue.Tests.csproj", "{89AF4168-F2D8-4746-B869-4A4ECE51EDF0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{6F28D03A-674F-4A7E-8776-389C450C190A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F28D03A-674F-4A7E-8776-389C450C190A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F28D03A-674F-4A7E-8776-389C450C190A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C556CB96-18C0-419F-BA42-12615AFD2576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C556CB96-18C0-419F-BA42-12615AFD2576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C556CB96-18C0-419F-BA42-12615AFD2576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C556CB96-18C0-419F-BA42-12615AFD2576}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89AF4168-F2D8-4746-B869-4A4ECE51EDF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89AF4168-F2D8-4746-B869-4A4ECE51EDF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89AF4168-F2D8-4746-B869-4A4ECE51EDF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89AF4168-F2D8-4746-B869-4A4ECE51EDF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
