@@ -13,16 +13,18 @@ namespace Infrastructure
             var assetBucket = "aussie-stats-assets";
             var lambdaArtifactBucket = "aussie-stats-lambda-artifacts";
 
+            var env = new Amazon.CDK.Environment()
+            {
+                Account = accountId,
+                Region = region
+            };
+
             var app = new App();
             
             new AssetStack(app, "AssetStack", new AssetStackProps
             {
                 StackName = "InfrastructureStack",
-                Env = new Amazon.CDK.Environment()
-                {
-                    Account = accountId,
-                    Region = region
-                },
+                Env = env,
                 AssetBucket = assetBucket,
                 LambdaAritifactBucket = lambdaArtifactBucket
             });
@@ -30,21 +32,13 @@ namespace Infrastructure
             new AuroraDatabaseStack(app, "DatabaseStack", new AuroraDatabaseStackProps
             {
                 StackName = "DatabaseStack",
-                Env = new Amazon.CDK.Environment()
-                {
-                    Account = accountId,
-                    Region = region
-                }
+                Env = env,
             });
 
             new CensusEtlStack(app, "CensusEtlStack", new CensusEtlStackProps
             {
                 StackName = "CensusEtlStack",
-                Env = new Amazon.CDK.Environment()
-                {
-                    Account = accountId,
-                    Region = region
-                },
+                Env = env,
                 AuroraSeucrityGroupId = auroraSecurityGroupId,
                 LambdaArtifactBucket = lambdaArtifactBucket
             });
@@ -52,11 +46,7 @@ namespace Infrastructure
             new ApiStack(app, "ApiStack", new ApiStackProps
             {
                 LambdaArtifactBucket = lambdaArtifactBucket,
-                Env = new Amazon.CDK.Environment()
-                {
-                    Account = accountId,
-                    Region = region
-                }
+                Env = env
             });
 
             app.Synth();

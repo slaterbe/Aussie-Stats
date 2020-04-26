@@ -1,4 +1,5 @@
 ﻿using Amazon.CDK;
+using Amazon.CDK.AWS.APIGateway;
 using Amazon.CDK.AWS.EC2;
 using Amazon.CDK.AWS.Lambda;
 using Amazon.CDK.AWS.S3;
@@ -23,9 +24,14 @@ namespace Infrastructure.Stacks
             var apiLambda = new Function(this, "apiLambda", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,
-                Handler = "",
+                Handler = "something",
                 Code = Code.FromBucket(bucket, "default.zip"),
                 SecurityGroups = new ISecurityGroup[] { securityGroup }
+            });
+
+            new LambdaRestApi(this, "apiGateway", new LambdaRestApiProps
+            {
+                Handler = apiLambda
             });
         }
     }

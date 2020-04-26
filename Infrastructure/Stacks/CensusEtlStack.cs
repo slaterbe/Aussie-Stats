@@ -22,6 +22,11 @@ namespace Infrastructure.Stacks
 
             var bucket = Bucket.FromBucketName(this, "bucket", props.LambdaArtifactBucket);
 
+            var queue = new Queue(this, "queue", new QueueProps
+            {
+                QueueName = "etl-queue"
+            });
+
             new Function(this, "census-etl", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,
@@ -33,14 +38,10 @@ namespace Infrastructure.Stacks
             var workerFunction = new Function(this, "worker-function", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,
-                Handler = "",
+                Handler = "something",
                 Code = Code.FromBucket(bucket, "default.zip"),
-                SecurityGroups = new ISecurityGroup[] { securityGroup }
-            });
-
-            var queue = new Queue(this, "queue", new QueueProps
-            {
-                QueueName = "etl-queue"
+                SecurityGroups = new ISecurityGroup[] { securityGroup },
+                ReservedConcurrentExecutions = 2
             });
 
             workerFunction.AddEventSource(new SqsEventSource(queue));
