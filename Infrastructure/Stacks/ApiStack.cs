@@ -26,7 +26,8 @@ namespace Infrastructure.Stacks
                 Runtime = Runtime.DOTNET_CORE_3_1,
                 Handler = "something",
                 Code = Code.FromBucket(bucket, "default.zip"),
-                SecurityGroups = new ISecurityGroup[] { securityGroup }
+                SecurityGroups = new ISecurityGroup[] { securityGroup },
+                ReservedConcurrentExecutions = 2
             });
 
             new LambdaRestApi(this, "apiGateway", new LambdaRestApiProps
