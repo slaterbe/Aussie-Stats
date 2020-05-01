@@ -40,7 +40,8 @@ namespace Infrastructure
                 StackName = "CensusEtlStack",
                 Env = env,
                 AuroraSeucrityGroupId = auroraSecurityGroupId,
-                LambdaArtifactBucket = lambdaArtifactBucket
+                CensusArtifactBucket = assetBucket,
+                LambdaArtifactBucket = lambdaArtifactBucket,
             });
 
             new ApiStack(app, "ApiStack", new ApiStackProps
