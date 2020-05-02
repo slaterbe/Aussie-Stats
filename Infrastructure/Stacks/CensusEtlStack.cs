@@ -51,7 +51,7 @@ namespace Infrastructure.Stacks
             new Function(this, "census-etl", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,
-                Handler = "",
+                Handler = "something",
                 Code = Code.FromBucket(artifactBucket, "default.zip"),
                 SecurityGroups = new ISecurityGroup[] { securityGroup },
                 Role = enqueueRole

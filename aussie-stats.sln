@@ -9,6 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EtlEnqueue", "EtlEnqueue\Et
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EtlEnqueue.Tests", "EtlEnqueue.Tests\EtlEnqueue.Tests.csproj", "{89AF4168-F2D8-4746-B869-4A4ECE51EDF0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Tests", "4. Tests", "{B3C243A9-990A-455D-9961-2B95BF397D9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Infrastructure", "1. Infrastructure", "{E22CBDBD-A202-4035-AF3E-0E07A8E7FEF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Common", "2. Common", "{C2FD60B4-609E-452E-B175-BE70155B356A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Functions", "3. Functions", "{549B020F-0E3C-43B0-9F51-6A8D754BC75D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +38,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6F28D03A-674F-4A7E-8776-389C450C190A} = {E22CBDBD-A202-4035-AF3E-0E07A8E7FEF4}
+		{C556CB96-18C0-419F-BA42-12615AFD2576} = {549B020F-0E3C-43B0-9F51-6A8D754BC75D}
+		{89AF4168-F2D8-4746-B869-4A4ECE51EDF0} = {B3C243A9-990A-455D-9961-2B95BF397D9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3C5F7A95-EDBE-40E5-91B0-FB66D787D34B}
