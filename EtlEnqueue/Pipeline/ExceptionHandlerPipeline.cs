@@ -1,10 +1,8 @@
 ﻿using EtlEnqueue.Request;
+using EtlEnqueue.Service;
 using MediatR;
 using MediatR.Pipeline;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,9 +10,9 @@ namespace EtlEnqueue.Pipeline
 {
     public class ExceptionHandlerPipeline : IRequestExceptionHandler<EtlEnqueueRequest, Unit>
     {
-        private readonly ILogger<ExceptionHandlerPipeline> logger;
+        private readonly ILogger logger;
 
-        public ExceptionHandlerPipeline(ILogger<ExceptionHandlerPipeline> logger)
+        public ExceptionHandlerPipeline(ILogger logger)
         {
             this.logger = logger;
         }
@@ -24,7 +22,6 @@ namespace EtlEnqueue.Pipeline
             RequestExceptionHandlerState<Unit> state, 
             CancellationToken cancellationToken)
         {
-            logger.LogError(exception, "Hello world");
             state.SetHandled();
         }
     }

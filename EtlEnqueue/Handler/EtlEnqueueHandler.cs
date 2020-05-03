@@ -1,9 +1,6 @@
 ﻿using EtlEnqueue.Command;
 using EtlEnqueue.Request;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

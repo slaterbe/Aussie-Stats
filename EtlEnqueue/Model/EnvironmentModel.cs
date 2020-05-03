@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EtlEnqueue.Model
+﻿namespace EtlEnqueue.Model
 {
     public class EnvironmentModel
     {
