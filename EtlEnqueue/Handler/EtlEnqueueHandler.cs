@@ -1,33 +1,28 @@
 ﻿using EtlEnqueue.Command;
+using EtlEnqueue.Request;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace EtlEnqueue.Pipeline
+namespace EtlEnqueue.Handler
 {
-    public interface IEtlEnqueuePipeline
+    public class EtlEnqueueHandler : AsyncRequestHandler<EtlEnqueueRequest>
     {
-        Task Execute();
-    }
-
-    public class EtlEnqueuePipeline : IEtlEnqueuePipeline
-    {
-        private readonly IMediator mediator;
         private readonly ICensusFileCommand censusFileCommand;
         private readonly IQueueCommand queueCommand;
 
-        public EtlEnqueuePipeline(IMediator mediator,
-            ICensusFileCommand censusFileCommand,
+        public EtlEnqueueHandler(ICensusFileCommand censusFileCommand,
             IQueueCommand queueCommand)
         {
-            this.mediator = mediator;
             this.censusFileCommand = censusFileCommand;
             this.queueCommand = queueCommand;
         }
 
-        public async Task Execute()
+        protected override async Task Handle(EtlEnqueueRequest request, CancellationToken cancellationToken)
         {
-            
-
             var files = await censusFileCommand.GetCensusFiles();
             await queueCommand.Enqueue(files);
         }

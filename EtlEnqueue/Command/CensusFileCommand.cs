@@ -14,19 +14,6 @@ namespace EtlEnqueue.Command
         Task<List<string>> GetCensusFiles();
     }
 
-    public class Test : IRequest<string>
-    {
-
-    }
-
-    public class TestHandler : IRequestHandler<Test, string>
-    {
-        public Task<string> Handle(Test request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class CensusFileCommand : ICensusFileCommand
     {
         private readonly IAmazonS3 awsClient;
