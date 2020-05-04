@@ -22,6 +22,7 @@ namespace EtlEnqueue.Pipeline
             RequestExceptionHandlerState<Unit> state, 
             CancellationToken cancellationToken)
         {
+            logger.LogError(exception);
             state.SetHandled();
         }
     }

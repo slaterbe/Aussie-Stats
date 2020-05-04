@@ -24,6 +24,7 @@ namespace Infrastructure.Stacks
 
             var artifactBucket = Bucket.FromBucketName(this, "artifactBucket", props.LambdaArtifactBucket);
             var censusBucket = Bucket.FromBucketName(this, "lambdaBucket", props.CensusArtifactBucket);
+            var awsManagedLambdaPolicy = ManagedPolicy.FromAwsManagedPolicyName("AWSLambdaBasicExecutionRole");
 
             var queue = new Queue(this, "queue", new QueueProps
             {
@@ -47,6 +48,7 @@ namespace Infrastructure.Stacks
                 Resources = new string[] { queue.QueueArn },
                 Actions = new string[] { "sqs:SendMessage" }
             }));
+            enqueueRole.AddManagedPolicy(awsManagedLambdaPolicy);
 
             new Function(this, "census-etl", new FunctionProps
             {
@@ -67,6 +69,7 @@ namespace Infrastructure.Stacks
                 Resources = new string[] { censusBucket.BucketArn },
                 Actions = new string[] { "s3:GetObject" }
             }));
+            workerRole.AddManagedPolicy(awsManagedLambdaPolicy);
             workerRole.AddToPolicy(new PolicyStatement(new PolicyStatementProps
             {
                 Effect = Effect.ALLOW,
