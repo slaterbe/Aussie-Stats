@@ -30,4 +30,12 @@
     -->
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EtlEnqueue\EtlEnqueue.csproj" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cd ..&#xD;&#xA;dotnet publish EtlEnqueue" />
+  </Target>
+
 </Project>

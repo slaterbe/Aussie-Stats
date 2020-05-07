@@ -24,7 +24,7 @@ namespace Infrastructure.Stacks
 
             var artifactBucket = Bucket.FromBucketName(this, "artifactBucket", props.LambdaArtifactBucket);
             var censusBucket = Bucket.FromBucketName(this, "lambdaBucket", props.CensusArtifactBucket);
-            var awsManagedLambdaPolicy = ManagedPolicy.FromAwsManagedPolicyName("AWSLambdaBasicExecutionRole");
+            var awsManagedLambdaPolicy = ManagedPolicy.FromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole");
 
             var queue = new Queue(this, "queue", new QueueProps
             {
@@ -53,8 +53,8 @@ namespace Infrastructure.Stacks
             new Function(this, "census-etl", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,
-                Handler = "something",
-                Code = Code.FromBucket(artifactBucket, "default.zip"),
+                Handler = "EtlEnqueue::EtlEnqueue.Function::FunctionHandler",
+                Code = Code.FromAsset("EtlEnqueue/bin/Debug/netcoreapp3.1/publish"),
                 SecurityGroups = new ISecurityGroup[] { securityGroup },
                 Role = enqueueRole
             });

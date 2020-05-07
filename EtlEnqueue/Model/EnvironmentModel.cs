@@ -4,13 +4,11 @@
     {
         public EnvironmentModel()
         {
-            KeyPrefix = System.Environment.GetEnvironmentVariable("ENQUEUE_KEY_PREFIX");
-            Bucket = System.Environment.GetEnvironmentVariable("ASSET_BUCKET");
-            TargetQueue = System.Environment.GetEnvironmentVariable("ENQUEUE_SQS");
+            KeyPrefix = System.Environment.GetEnvironmentVariable("AUSSIE_STATS_ENQUEUE_KEY_PREFIX");
+            Bucket = System.Environment.GetEnvironmentVariable("AUSSIE_STATS_ASSET_BUCKET");
         }
 
         public string KeyPrefix { get; }
         public string Bucket { get; }
-        public string TargetQueue { get; }
     }
 }

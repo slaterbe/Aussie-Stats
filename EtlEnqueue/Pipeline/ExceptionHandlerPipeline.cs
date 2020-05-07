@@ -17,13 +17,14 @@ namespace EtlEnqueue.Pipeline
             this.logger = logger;
         }
 
-        public async Task Handle(EtlEnqueueRequest request, 
+        public Task Handle(EtlEnqueueRequest request, 
             Exception exception, 
             RequestExceptionHandlerState<Unit> state, 
             CancellationToken cancellationToken)
         {
             logger.LogError(exception);
             state.SetHandled();
+            return Task.CompletedTask;
         }
     }
 }
