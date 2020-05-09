@@ -6,6 +6,8 @@ using EtlEnqueue.Request;
 using EtlEnqueue.Service;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.LambdaJsonSerializer))]
@@ -20,7 +22,7 @@ namespace EtlEnqueue
         /// <param name="input"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public string FunctionHandler(string input, ILambdaContext context)
+        public string FunctionHandler(Object obj, ILambdaContext context)
         {
             var environment = new EnvironmentModel();
 
@@ -39,7 +41,7 @@ namespace EtlEnqueue
 
             mediatr.Send(request).Wait();
 
-            return input?.ToUpper();
+            return "Enqueue Successful";
         }
     }
 }
