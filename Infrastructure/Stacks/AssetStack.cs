@@ -20,7 +20,29 @@ namespace Infrastructure.Stacks
                 BucketName = props.AssetBucket,
                 PublicReadAccess = false,
                 Encryption = BucketEncryption.UNENCRYPTED,
-                RemovalPolicy = RemovalPolicy.RETAIN
+                RemovalPolicy = RemovalPolicy.RETAIN,
+                BlockPublicAccess = new BlockPublicAccess(new BlockPublicAccessOptions
+                {
+                    BlockPublicAcls= true,
+                    IgnorePublicAcls = true,
+                    BlockPublicPolicy = true,
+                    RestrictPublicBuckets = true
+                }),
+                LifecycleRules = new ILifecycleRule[]
+                {
+                    new LifecycleRule
+                    {
+                        Enabled = true,
+                        Transitions = new ITransition[]
+                        {
+                            new Transition
+                            {
+                                StorageClass = StorageClass.INFREQUENT_ACCESS,
+                                TransitionAfter = Duration.Days(30)
+                            }
+                        }
+                    }
+                }
             });
 
             new Bucket(this, "Aussie-Stats-Lambda-Artifacts", new BucketProps
