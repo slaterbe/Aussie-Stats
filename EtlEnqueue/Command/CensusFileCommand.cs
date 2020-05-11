@@ -43,6 +43,7 @@ namespace EtlEnqueue.Command
             {
                 request = new ListObjectsV2Request
                 {
+                    BucketName = environmentModel.Bucket,
                     ContinuationToken = listResponse.NextContinuationToken
                 };
 

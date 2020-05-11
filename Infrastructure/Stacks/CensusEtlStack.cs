@@ -12,8 +12,8 @@ namespace Infrastructure.Stacks
     public class CensusEtlStackProps : StackProps
     {
         public string AuroraSeucrityGroupId { get; set; } = String.Empty;
-        public string LambdaArtifactBucket { get; set; } = String.Empty;
         public string CensusArtifactBucket { get; set; } = String.Empty;
+        public string CensusEtlQueue { get; set; } = String.Empty;
     }
 
     public class CensusEtlStack : Stack
@@ -22,13 +22,12 @@ namespace Infrastructure.Stacks
         {
             var securityGroup = SecurityGroup.FromSecurityGroupId(this, "aurora-sg", props.AuroraSeucrityGroupId);
 
-            var artifactBucket = Bucket.FromBucketName(this, "artifactBucket", props.LambdaArtifactBucket);
             var censusBucket = Bucket.FromBucketName(this, "lambdaBucket", props.CensusArtifactBucket);
             var awsManagedLambdaPolicy = ManagedPolicy.FromAwsManagedPolicyName("service-role/AWSLambdaBasicExecutionRole");
 
             var queue = new Queue(this, "queue", new QueueProps
             {
-                QueueName = "etl-queue"
+                QueueName = props.CensusEtlQueue
             });
 
             var enqueueRole = new Role(this, "enqueue-role", new RoleProps
@@ -89,7 +88,7 @@ namespace Infrastructure.Stacks
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,
                 Handler = "something",
-                Code = Code.FromBucket(artifactBucket, "default.zip"),
+                Code = Code.FromAsset("EtlEnqueue/bin/Debug/netcoreapp3.1/publish"),
                 SecurityGroups = new ISecurityGroup[] { securityGroup },
                 ReservedConcurrentExecutions = 2,
                 Role = workerRole

@@ -10,7 +10,6 @@ namespace Infrastructure.Stacks
         public string LambdaAritifactBucket { get; set; } = string.Empty;
     }
 
-
     public class AssetStack : Stack
     {
         internal AssetStack(Construct scope, string id, AssetStackProps props) : base(scope, id, props)

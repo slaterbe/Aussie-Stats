@@ -9,7 +9,6 @@ namespace Infrastructure.Stacks
 {
     public class ApiStackProps : StackProps
     {
-        public string LambdaArtifactBucket { get; set; } = String.Empty;
         public string AuroraSecurityGroupId { get; set; } = String.Empty;
     }
 
@@ -19,13 +18,11 @@ namespace Infrastructure.Stacks
         {
             var securityGroup = SecurityGroup.FromSecurityGroupId(this, "aurora-sg", props.AuroraSecurityGroupId);
 
-            var bucket = Bucket.FromBucketName(this, "bucket", props.LambdaArtifactBucket);
-
             var apiLambda = new Function(this, "apiLambda", new FunctionProps
             {
                 Runtime = Runtime.DOTNET_CORE_3_1,
                 Handler = "something",
-                Code = Code.FromBucket(bucket, "default.zip"),
+                Code = Code.FromAsset("EtlEnqueue/bin/Debug/netcoreapp3.1/publish"),
                 SecurityGroups = new ISecurityGroup[] { securityGroup },
                 ReservedConcurrentExecutions = 2
             });

@@ -11,7 +11,7 @@ namespace Infrastructure
             var region = System.Environment.GetEnvironmentVariable("CDK_DEFAULT_REGION");
             var auroraSecurityGroupId = "aurora-security-group";
             var assetBucket = "aussie-stats-assets";
-            var lambdaArtifactBucket = "aussie-stats-lambda-artifacts";
+            var censusEtlQueue = "census-etl-queue";
 
             var env = new Amazon.CDK.Environment()
             {
@@ -26,7 +26,6 @@ namespace Infrastructure
                 StackName = "InfrastructureStack",
                 Env = env,
                 AssetBucket = assetBucket,
-                LambdaAritifactBucket = lambdaArtifactBucket
             });
 
             new AuroraDatabaseStack(app, "DatabaseStack", new AuroraDatabaseStackProps
@@ -41,12 +40,11 @@ namespace Infrastructure
                 Env = env,
                 AuroraSeucrityGroupId = auroraSecurityGroupId,
                 CensusArtifactBucket = assetBucket,
-                LambdaArtifactBucket = lambdaArtifactBucket,
+                CensusEtlQueue = censusEtlQueue
             });
 
             new ApiStack(app, "ApiStack", new ApiStackProps
             {
-                LambdaArtifactBucket = lambdaArtifactBucket,
                 Env = env
             });
 
