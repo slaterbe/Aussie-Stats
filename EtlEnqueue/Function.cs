@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.LambdaJsonSerializer))]
@@ -22,7 +23,21 @@ namespace EtlEnqueue
         /// <param name="input"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        public string FunctionHandler(Object obj, ILambdaContext context)
+        public async Task<string> FunctionHandler(Object obj, ILambdaContext context)
+        {
+            try
+            {
+                return await this.Run(context);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return "Error thrown";
+        }
+
+        private async Task<string> Run(ILambdaContext context)
         {
             var environment = new EnvironmentModel();
 
@@ -39,7 +54,7 @@ namespace EtlEnqueue
             var mediatr = provider.GetService<IMediator>();
             var request = new EtlEnqueueRequest();
 
-            mediatr.Send(request).Wait();
+            await mediatr.Send(request);
 
             return "Enqueue Successful";
         }

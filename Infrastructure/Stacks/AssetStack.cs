@@ -64,9 +64,17 @@ namespace Infrastructure.Stacks
             });
             user.AddToPolicy(new PolicyStatement(new PolicyStatementProps
             {
+                Sid = "ListObjectsInBucket",
                 Effect = Effect.ALLOW,
                 Resources = new string[] { bucket.BucketArn },
-                Actions = new string[] { "s3:*" }
+                Actions = new string[] { "s3:ListBucket" }
+            }));
+            user.AddToPolicy(new PolicyStatement(new PolicyStatementProps
+            {
+                Sid = "AllObjectActions",
+                Effect = Effect.ALLOW,
+                Resources = new string[] { $"{bucket.BucketArn}/*" },
+                Actions = new string[] { "s3:*Object" }
             }));
 
             var accessKey = new CfnAccessKey(this, "myAccessKey", new CfnAccessKeyProps

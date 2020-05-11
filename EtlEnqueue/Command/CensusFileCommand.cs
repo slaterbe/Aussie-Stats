@@ -1,6 +1,7 @@
 ﻿using Amazon.S3;
 using Amazon.S3.Model;
 using EtlEnqueue.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,8 +31,10 @@ namespace EtlEnqueue.Command
                 BucketName = environmentModel.Bucket,
                 Prefix = environmentModel.KeyPrefix
             };
+
+            ListObjectsV2Response listResponse = null;
+            listResponse = await awsClient.ListObjectsV2Async(request);
             
-            var listResponse = await awsClient.ListObjectsV2Async(request);
             var keys = listResponse.S3Objects
                 .Select(a => a.Key)
                 .ToList();
