@@ -7,7 +7,8 @@
       "workingDirectory": ".\\bin\\$(Configuration)\\netcoreapp3.1",
       "environmentVariables": {
         "AUSSIE_STATS_ENQUEUE_KEY_PREFIX": "Census",
-        "AUSSIE_STATS_ASSET_BUCKET": "aussie-stats-assets"
+        "AUSSIE_STATS_ASSET_BUCKET": "aussie-stats-assets",
+        "AUSSIE_STATS_CENSUS_ETL_QUEUE": "https://sqs.ap-southeast-2.amazonaws.com/456921723696/census-etl-queue"
       }
     }
   }

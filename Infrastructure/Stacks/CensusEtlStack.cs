@@ -30,6 +30,12 @@ namespace Infrastructure.Stacks
                 QueueName = props.CensusEtlQueue
             });
 
+            new CfnOutput(this, "sqs-queue", new CfnOutputProps
+            {
+                ExportName = "enqueueSQS",
+                Value = queue.QueueUrl
+            });
+
             var enqueueRole = new Role(this, "enqueue-role", new RoleProps
             {
                 AssumedBy = new ServicePrincipal("lambda.amazonaws.com")

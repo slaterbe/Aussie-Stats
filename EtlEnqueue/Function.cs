@@ -1,5 +1,6 @@
 using Amazon.Lambda.Core;
 using Amazon.S3;
+using Amazon.SQS;
 using EtlEnqueue.Command;
 using EtlEnqueue.Model;
 using EtlEnqueue.Request;
@@ -7,7 +8,6 @@ using EtlEnqueue.Service;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
@@ -47,6 +47,7 @@ namespace EtlEnqueue
             collection.AddScoped<ICensusFileCommand, CensusFileCommand>();
             collection.AddScoped<IQueueCommand, QueueCommand>();
             collection.AddScoped<IAmazonS3, AmazonS3Client>();
+            collection.AddScoped<IAmazonSQS, AmazonSQSClient>();
 
             collection.AddMediatR(typeof(Function));
 
