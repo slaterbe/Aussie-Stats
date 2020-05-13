@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Functions", "3. Function
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CensusImporter", "CensusImporter\CensusImporter.csproj", "{6B5710DC-F4E5-490D-AFAD-2C9C2D01E25E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{16B0E162-4BC4-4D5A-8132-A0301BFBE9DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{16B0E162-4BC4-4D5A-8132-A0301BFBE9DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{AFCA8983-F576-4534-A871-1B68CDE95703}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{16B0E162-4BC4-4D5A-8132-A0301BFBE9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16B0E162-4BC4-4D5A-8132-A0301BFBE9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16B0E162-4BC4-4D5A-8132-A0301BFBE9DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFCA8983-F576-4534-A871-1B68CDE95703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFCA8983-F576-4534-A871-1B68CDE95703}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFCA8983-F576-4534-A871-1B68CDE95703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFCA8983-F576-4534-A871-1B68CDE95703}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{89AF4168-F2D8-4746-B869-4A4ECE51EDF0} = {B3C243A9-990A-455D-9961-2B95BF397D9F}
 		{6B5710DC-F4E5-490D-AFAD-2C9C2D01E25E} = {549B020F-0E3C-43B0-9F51-6A8D754BC75D}
 		{16B0E162-4BC4-4D5A-8132-A0301BFBE9DD} = {C2FD60B4-609E-452E-B175-BE70155B356A}
+		{AFCA8983-F576-4534-A871-1B68CDE95703} = {C2FD60B4-609E-452E-B175-BE70155B356A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3C5F7A95-EDBE-40E5-91B0-FB66D787D34B}
