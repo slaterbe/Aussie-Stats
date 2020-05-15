@@ -2,12 +2,20 @@ using Amazon.Lambda.Core;
 using Amazon.S3;
 using Amazon.SQS;
 using EtlEnqueue.Command;
+using EtlEnqueue.Handler;
 using EtlEnqueue.Model;
+using EtlEnqueue.Pipeline;
 using EtlEnqueue.Request;
 using EtlEnqueue.Service;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleInjector;
+using SimpleInjector.Lifestyles;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
@@ -41,23 +49,57 @@ namespace EtlEnqueue
         {
             var environment = new EnvironmentModel();
 
-            var collection = new ServiceCollection();
-            collection.AddSingleton<EnvironmentModel>(environment);
-            collection.AddSingleton<ILogger>(a => new Logger(context.Logger));
-            collection.AddScoped<ICensusFileCommand, CensusFileCommand>();
-            collection.AddScoped<IQueueCommand, QueueCommand>();
-            collection.AddScoped<IAmazonS3, AmazonS3Client>();
-            collection.AddScoped<IAmazonSQS, AmazonSQSClient>();
+            var container = new Container();
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            var assemblies = GetAssemblies().ToArray();
+            container.RegisterSingleton<IMediator, Mediator>();
+            container.Register(typeof(IRequestHandler<,>), assemblies);
 
-            collection.AddMediatR(typeof(Function));
+            RegisterHandlers(container, typeof(INotificationHandler<>), assemblies);
+            RegisterHandlers(container, typeof(IRequestExceptionAction<,>), assemblies);
+            RegisterHandlers(container, typeof(IRequestExceptionHandler<,,>), assemblies);
 
-            var provider = collection.BuildServiceProvider();
-            var mediatr = provider.GetService<IMediator>();
+            //Register Pipeline - ORDER MATTERS
+            container.Collection.Register(typeof(IPipelineBehavior<,>), new Type[] { });
+
+            container.RegisterInstance<EnvironmentModel>(environment);
+            container.RegisterInstance<ILogger>(new Logger(context.Logger));
+
+            //Commands
+            container.Register<ICensusFileCommand, CensusFileCommand>();
+            container.Register<IQueueCommand, QueueCommand>();
+
+            //Register AWS Services
+            container.Register<IAmazonS3>(() => new AmazonS3Client(), Lifestyle.Singleton);
+            container.Register<IAmazonSQS>(() => new AmazonSQSClient(), Lifestyle.Singleton);
+
+            container.Register(() => new ServiceFactory(container.GetInstance), Lifestyle.Singleton);
+
+            container.Verify();
+            var mediatr = container.GetInstance<IMediator>();
             var request = new EtlEnqueueRequest();
 
             await mediatr.Send(request);
 
             return "Enqueue Successful";
+        }
+
+        private static void RegisterHandlers(Container container, Type collectionType, Assembly[] assemblies)
+        {
+            // we have to do this because by default, generic type definitions (such as the Constrained Notification Handler) won't be registered
+            var handlerTypes = container.GetTypesToRegister(collectionType, assemblies, new TypesToRegisterOptions
+            {
+                IncludeGenericTypeDefinitions = true,
+                IncludeComposites = false,
+            });
+
+            container.Collection.Register(collectionType, handlerTypes);
+        }
+
+        private static IEnumerable<Assembly> GetAssemblies()
+        {
+            yield return typeof(IMediator).GetTypeInfo().Assembly;
+            yield return typeof(Function).GetTypeInfo().Assembly;
         }
     }
 }
