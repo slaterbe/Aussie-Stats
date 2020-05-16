@@ -20,8 +20,7 @@ namespace EtlEnqueue.Handler
 
         protected override async Task Handle(EtlEnqueueRequest request, CancellationToken cancellationToken)
         {
-            var files = await censusFileCommand.GetCensusFiles();
-            await queueCommand.Enqueue(files);
+            await queueCommand.Enqueue(request.CensusFiles);
         }
     }
 }

@@ -3,6 +3,7 @@ using Amazon.S3;
 using Amazon.SQS;
 using EtlEnqueue.Command;
 using EtlEnqueue.Model;
+using EtlEnqueue.Pipeline;
 using EtlEnqueue.Request;
 using EtlEnqueue.Service;
 using MediatR;
@@ -57,7 +58,9 @@ namespace EtlEnqueue
             RegisterHandlers(container, typeof(IRequestExceptionHandler<,,>), assemblies);
 
             //Register Pipeline - ORDER MATTERS
-            container.Collection.Register(typeof(IPipelineBehavior<,>), new Type[] { });
+            container.Collection.Register(typeof(IPipelineBehavior<,>), new [] { 
+                typeof(CensusFilePipeline)
+            });
 
             container.RegisterInstance<EnvironmentModel>(environment);
             container.RegisterInstance<ILogger>(new Logger(context.Logger));
